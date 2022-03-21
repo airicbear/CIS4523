@@ -1,0 +1,42 @@
+#+TITLE: Classification of Salary By Occupation, Gender, and Other Metrics
+#+AUTHOR: Eric Nguyen {{{email}}}
+#+EMAIL: tuk94307@temple.edu
+#+OPTIONS: toc:nil num:nil
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+#+LATEX_HEADER: \usepackage[doublespacing]{setspace}
+#+LATEX_HEADER: \frenchspacing
+#+LATEX_HEADER: \usepackage[backend=bibtex]{biblatex}
+#+LATEX_HEADER: \addbibresource{./assignment-07.bib}
+#+LATEX_CLASS_OPTIONS: [12pt]
+
+* Objective and Significance
+
+The purpose of this project is to build a classifier which will predict the income bracket in which a given American falls into using various features including occupation, gender, etc.
+This will allow us to get a better picture of what salaries an American can expect to earn given their circumstances.
+For example, it can be applied to career development and aiding Americans in choosing an optimal career for them, based on their desired salary.
+
+* Background
+
+The General Social Survey (GSS) [[cite:&GSS]] has been surveying Americans since 1972 with the mission to make insights about American society as it evolves over the years.
+Their efforts have enabled research in many different areas in the U.S., including Gender & Marriage, Current Affairs, Civil Liberties, Politics, Religion & Spirituality, and many more.
+This project focuses on a specific set of data: **the inflation-adjusted wage**, **age**, **occupation**, **number of children**, **gender**, **education status**, and **marital status** variables provided by the GSS.
+
+* Proposed Approach
+
+The R package, =stevedata= [[cite:&stevedata]], conveniently provides a ready-to-use data set of the GSS data from 1974 to 2018 with the following features: =year=, =realrinc=, =age=, =occ10=, =occrecode=, =prestg10=, =childs=, =wrkstat=, =gender=, =educcat=, and =maritalcat=.
+There is a lot of missing data, so we have a choice of /Deletion/ or /Imputation/.
+In this case, I prefer to use the **KNN imputation** method to retain potentially valuable information.
+I will also need to consider applying dimensionality reduction such as **PCA** to remove redundant/irrelevant features and thus improve training performance.
+After preprocessing the data, I have a choice of classifiers to select from, including /Decision Trees/, /Clustering/, /Neural Networks/, etc.
+In this project I will choose the **Clustering** classifier due to its simplicity compared to neural networks and more flexible boundary conditions compared to decision trees.
+In choosing the similarity measurement, I will compare the Euclidean distance against the Cosine similarity and then choose the measurement that performs better.
+To evaluate the model I will apply the *\(k\)-fold cross-validation method* with \(k = 10\) folds.
+
+\noindent *Weekly Management Plan*
+
+- Week of Mar 21: Research KNN imputation and dimensionality reduction methods
+- Week of Mar 28: Perform KNN imputation and dimensionality reduction
+- Week of Apr 4: Build model and perform cross-validation
+- Week of Apr 11: Work on slides to present project
+
+[[printbibliography:]]
