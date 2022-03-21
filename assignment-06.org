@@ -1,0 +1,296 @@
+#+TITLE: Assignment 06
+#+AUTHOR: Eric Nguyen
+#+OPTIONS: toc:nil num:nil
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+#+LATEX_HEADER: \frenchspacing
+#+LATEX_CLASS_OPTIONS: [12pt]
+
+* Problem 1
+
+** Part (1)
+
+The vanishing gradient problem is the problem where the activation values become increasingly saturated in a deep neural network due to repeated multiplications.
+An example of the vanishing gradient problem for a deep neural network using the sigmoid activation function is shown
+
+[[./img/assignment-06-p1.png]]
+
+where the gradient approaches zero in the backpropgagation calculation as repeated partial derivatives are taken.
+This behavior is caused due to the sigmoid function being a saturating function, that is, successive differentiation reduces the activation function's range to approach zero.
+
+** Part (2)
+
+A way to overcome this problem is to make use of ReLU where we apply an activation function \(f(z)\) at hidden nodes.
+A popular choice of \(f(z)\) is
+
+\[f(z) = \begin{cases} z, &\text{if } z > 0. \\ 0, &\text{otherwise.} \end{cases}\]
+
+since its derivative is a nonsaturating function
+
+\[\frac{\partial f}{\partial z} = \begin{cases} 1, &\text{if } z > 0. \\ 0, &\text{otherwise.} \end{cases}\]
+
+* Problem 2
+
+** Part (a)
+
+The advantages of leader algorithm over the K-means algorithm include:
+- Much faster computation since far fewer calculations are required
+- Always produces the same set of clusters
+The disadvantages of the leader algorithm compared to the K-means algorithm include:
+- Unable to configure the number of clusters created
+- Worse fitting performance
+
+** Part (b)
+
+The leader algorithm may be improved by:
+
+- Improving the distance threshold selection by estimating the distribution of the distances between points of the data set.
+  To make this efficient, a suggestion would be to determine the distance distribution of a sample and use that as the estimation.
+  This information could be used to support a better threshold selection.
+
+- Allow for multiple thresholds (e.g., two thresholds produces three clusters, etc.).
+
+* Problem 3
+
+It does not seem that the traditional agglomerative hierarchial clustering routine accurately captures the nested cluster structure of a set of data points.
+Consider the scenario where we have a set of clusters each of which have a set of subclusters.
+In the case that the number of subclusters for any given cluster is greater than two, the ideal structure would be that the parent cluster branches out directly to its multiple subclusters.
+The traditional agglomerative hierarchial clustering routine cannot produce the ideal structure in this case, as it only allows for two subclusters to be merged under any given cluster.
+
+To more accurately capture the nested cluster structure, a suggestion to post-process the data would be to flatten the tree accordingly at certain clusters.
+
+* Problem 4
+
+To produce a dense matrix, I used the following Python code:
+
+#+begin_src python
+from scipy.sparse import csr_matrix
+import numpy as np
+import pandas as pd
+import random
+
+input_file = "docword.enron.txt"
+line_count = 3710420
+sample_size = 5000
+
+skip = sorted(random.sample(range(line_count), line_count - sample_size))
+
+df = pd.read_csv(input_file, header = None, delimiter = " ", skiprows=skip)
+sparsemat = csr_matrix(df.to_numpy())
+densemat = sparsemat.todense()
+outmat = np.matrix(densemat)
+
+print(outmat.shape)
+np.savetxt("enron.mat.sample.txt", outmat, fmt="%d")
+#+end_src
+
+** Part (a)
+
+I applied the partitional clustering on the entire data set using three clusters.
+
+#+begin_example
+********************************************************************************
+vcluster (CLUTO 2.1.2) Copyright 2001-06, Regents of the University of Minnesota
+
+Matrix Information -----------------------------------------------------------
+  Name: enron.mat.txt, #Rows: 3710420, #Columns: 3, #NonZeros: 11131260
+
+Options ----------------------------------------------------------------------
+  CLMethod=RB, CRfun=I2, SimFun=Cosine, #Clusters: 3
+  RowModel=None, ColModel=None, GrModel=SY-DIR, NNbrs=40
+  Colprune=1.00, EdgePrune=-1.00, VtxPrune=-1.00, MinComponent=5
+  CSType=Best, AggloFrom=0, AggloCRFun=I2, NTrials=10, NIter=10
+
+Solution ---------------------------------------------------------------------
+
+------------------------------------------------------------------------
+3-way clustering: [I2=3.67e+006] [3710420 of 3710420]
+------------------------------------------------------------------------
+cid  Size  ISim  ISdev   ESim  ESdev  |
+------------------------------------------------------------------------
+  0 1523290 +2029.780 +2039.333 -2085.974 +2079.798 |
+  1 756267 +769.251 +768.012 +2070.425 +2065.371 |
+  2 1430863 -1512.424 +1513.954 +1548.450 +1541.108 |
+------------------------------------------------------------------------
+
+Timing Information -----------------------------------------------------------
+   I/O:                                   3.731 sec
+   Clustering:                           27.693 sec
+   Reporting:                             0.185 sec
+Memory Usage Information -----------------------------------------------------
+   Maximum memory used:               664928256 bytes
+   Current memory used:               371245200 bytes
+********************************************************************************
+#+end_example
+
+** Part (b)
+
+For this part, I applied the clustering on a sample of 5000 documents.
+
+*** Agglomerative clustering
+
+**** Complete-link
+
+#+begin_example
+,********************************************************************************
+vcluster (CLUTO 2.1.2) Copyright 2001-06, Regents of the University of Minnesota
+
+Matrix Information -----------------------------------------------------------
+  Name: enron.mat.sample.txt, #Rows: 5000, #Columns: 3, #NonZeros: 15000
+
+Options ----------------------------------------------------------------------
+  CLMethod=AGGLO, CRfun=CLINK, SimFun=Cosine, #Clusters: 3
+  RowModel=None, ColModel=None, GrModel=SY-DIR, NNbrs=40
+  Colprune=1.00, EdgePrune=-1.00, VtxPrune=-1.00, MinComponent=5
+  CSType=Best, AggloFrom=0, AggloCRFun=CLINK, NTrials=10, NIter=10
+
+Solution ---------------------------------------------------------------------
+
+------------------------------------------------------------------------
+3-way clustering: [CLINK=0.00e+000] [5000 of 5000]
+------------------------------------------------------------------------
+cid  Size  ISim  ISdev   ESim  ESdev  |
+------------------------------------------------------------------------
+  0  1068 +0.960 +0.018 +0.685 +0.137 |
+  1  1693 +0.987 +0.006 +0.780 +0.061 |
+  2  2239 +0.984 +0.008 +0.866 +0.009 |
+------------------------------------------------------------------------
+
+Timing Information -----------------------------------------------------------
+   I/O:                                   0.012 sec
+   Clustering:                            3.646 sec
+   Reporting:                             0.003 sec
+Memory Usage Information -----------------------------------------------------
+   Maximum memory used:               251199488 bytes
+   Current memory used:                  541696 bytes
+,********************************************************************************
+#+end_example
+
+**** Single-link
+
+#+begin_example
+,********************************************************************************
+vcluster (CLUTO 2.1.2) Copyright 2001-06, Regents of the University of Minnesota
+
+Matrix Information -----------------------------------------------------------
+  Name: enron.mat.sample.txt, #Rows: 5000, #Columns: 3, #NonZeros: 15000
+
+Options ----------------------------------------------------------------------
+  CLMethod=AGGLO, CRfun=SLINK, SimFun=Cosine, #Clusters: 3
+  RowModel=None, ColModel=None, GrModel=SY-DIR, NNbrs=40
+  Colprune=1.00, EdgePrune=-1.00, VtxPrune=-1.00, MinComponent=5
+  CSType=Best, AggloFrom=0, AggloCRFun=SLINK, NTrials=10, NIter=10
+
+Solution ---------------------------------------------------------------------
+
+------------------------------------------------------------------------
+3-way clustering: [SLINK=0.00e+000] [5000 of 5000]
+------------------------------------------------------------------------
+cid  Size  ISim  ISdev   ESim  ESdev  |
+------------------------------------------------------------------------
+  0    46 +1.000 +0.000 +0.524 +0.007 |
+  1   662 +0.983 +0.008 +0.652 +0.092 |
+  2  4292 +0.928 +0.037 +0.637 +0.195 |
+------------------------------------------------------------------------
+
+Timing Information -----------------------------------------------------------
+   I/O:                                   0.020 sec
+   Clustering:                            3.594 sec
+   Reporting:                             0.005 sec
+Memory Usage Information -----------------------------------------------------
+   Maximum memory used:               251133952 bytes
+   Current memory used:                  541696 bytes
+,********************************************************************************
+#+end_example
+
+**** Comparison
+
+Complete-link clusters tend to have similar sizes, while single-link clusters sizes are much different from each other.
+While it is hard to tell, it seems that the single-link merging scheme produces better results on inspection of =ISim= and =ESim= columns.
+
+*** Single-link graph clustering
+
+**** Cosine similarity
+
+#+begin_example
+,********************************************************************************
+vcluster (CLUTO 2.1.2) Copyright 2001-06, Regents of the University of Minnesota
+
+Matrix Information -----------------------------------------------------------
+  Name: enron.mat.sample.txt, #Rows: 5000, #Columns: 3, #NonZeros: 15000
+
+Options ----------------------------------------------------------------------
+  CLMethod=GRAPH, CRfun=Cut, SimFun=Cosine, #Clusters: 3
+  RowModel=None, ColModel=None, GrModel=SY-DIR, NNbrs=40
+  Colprune=1.00, EdgePrune=-1.00, VtxPrune=-1.00, MinComponent=5
+  CSType=Best, AggloFrom=0, AggloCRFun=SLINK_W, NTrials=10, NIter=10
+
+Solution ---------------------------------------------------------------------
+
+------------------------------------------------------------------------
+3-way clustering: [Cut=9.34e+004] [5000 of 5000]
+------------------------------------------------------------------------
+cid  Size  ISim  ISdev   ESim  ESdev  |
+------------------------------------------------------------------------
+  0   798 +0.047 +0.004 +0.000 +0.000 |
+  1  1687 +0.022 +0.002 +0.000 +0.000 |
+  2  2515 +0.015 +0.001 +0.000 +0.000 |
+------------------------------------------------------------------------
+
+Timing Information -----------------------------------------------------------
+   I/O:                                   0.004 sec
+   Clustering:                            0.404 sec
+   Reporting:                             0.005 sec
+Memory Usage Information -----------------------------------------------------
+   Maximum memory used:                10878976 bytes
+   Current memory used:                 2354776 bytes
+,********************************************************************************
+#+end_example
+
+**** Euclidean distance similarity
+
+#+begin_example
+,********************************************************************************
+vcluster (CLUTO 2.1.2) Copyright 2001-06, Regents of the University of Minnesota
+
+Matrix Information -----------------------------------------------------------
+  Name: enron.mat.sample.txt, #Rows: 5000, #Columns: 3, #NonZeros: 15000
+
+Options ----------------------------------------------------------------------
+  CLMethod=GRAPH, CRfun=Cut, SimFun=EuclDist, #Clusters: 3
+  RowModel=None, ColModel=None, GrModel=SY-DIR, NNbrs=40
+  Colprune=1.00, EdgePrune=-1.00, VtxPrune=-1.00, MinComponent=5
+  CSType=Best, AggloFrom=0, AggloCRFun=SLINK_W, NTrials=10, NIter=10
+
+Solution ---------------------------------------------------------------------
+
+------------------------------------------------------------------------
+3-way clustering: [Cut=8.13e+004] [5000 of 5000]
+------------------------------------------------------------------------
+cid  Size  ISim  ISdev   ESim  ESdev  |
+------------------------------------------------------------------------
+  0  1572 +0.021 +0.003 +0.000 +0.001 |
+  1  1503 +0.020 +0.003 +0.000 +0.001 |
+  2  1925 +0.017 +0.003 +0.000 +0.001 |
+------------------------------------------------------------------------
+
+Timing Information -----------------------------------------------------------
+   I/O:                                   0.004 sec
+   Clustering:                            0.401 sec
+   Reporting:                             0.005 sec
+Memory Usage Information -----------------------------------------------------
+   Maximum memory used:                10289152 bytes
+   Current memory used:                 2223648 bytes
+,********************************************************************************
+#+end_example
+
+**** Comparison
+
+The cosine similarity measure yields better clustering performance as shown upon inspection of the =ISim= column.
+
+* Problem 5
+
+1. Anomaly detection
+2. Data stream mining
+3. A/B testing at scale
+4. Mining big time series
+5. Graph mining
