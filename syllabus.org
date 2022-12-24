@@ -1,0 +1,76 @@
+#+TITLE: SPRING 2022 CIS 4523/5523: KNOWLEDGE DISCOVERY AND DATA MINING
+#+SUBTITLE: Time: Thursday, 5:30-8:00pm, Place: Tuttleman 302
+
+* Instructor
+
+Zoran Obradovic www.dabi.temple.edu/~zoran
+
+386 SERC, zoran.obradovic@temple.edu, phone: 215 204 6265
+
+* Teaching Assistant
+
+Marija Stanojevic 334 SERC, marija.stanojevic@temple.edu
+
+* Office hours (Instructor)
+
+Thursday 4:00-5:00pm and by appointment
+
+* Office hours (TA)
+
+Tuesday 1:00-3:00pm and by appointment
+
+* Goals
+
+The objective of knowledge discovery and data mining process is to extract nontrivial, implicit, previously unknown, and potentially useful information from massive datasets.
+The course is intended to serve as an introduction to the fundamental techniques required to support this process.
+The course is structured to provide ample opportunity for participants to learn about this research area, and scout around for promising research topics by a hands-on experience.
+
+* Prerequisites
+
+Basic knowledge in database systems; programming skills; basic statistics, graph theory, and linear algebra.
+
+* Texts
+
+Tan P.N., Steinbach M., Kumar V., Karpatne A.: Introduction to Data Mining, 2nd Edition, Pearson Education, 2018(required).
+
+Aggarwal, C.: Data Mining, The Textbook: Springer, 2015, ISBN-13: 978-3319141411 (recommended)
+
+Slides:
+https://wiki.illinois.edu//wiki/display/cs412/2.+Course+Syllabus+and+Schedule
+
+* Topics
+
+1. An overview of data mining tasks and techniques;
+
+2. Data:
+   - data types
+   - data quality
+   - data preprocessing: aggregation, sampling, dimensionality reduction, feature selection
+
+3. Similarities and distances:
+   - multidimensional data
+   - text similarity measures
+   - temporal similarity measures
+   - graph similarity measures
+   - supervised similarity functions
+
+4. Descriptive and Predictive Modeling
+   - model functions (cluster analysis, summarization, classification, regression, anomaly detection)
+   - model representation (instance-based and rule-based classifiers, decision trees, probabilistic classifiers, density models, partitioning, hierarchical, density-based, grid-based and model-based clustering algorithms, frequent pattern mining).
+
+5. Advanced topics:
+   - mining data streams
+   - mining time series
+   - mining spatial data
+   - mining discrete sequences.
+
+6. Reading and research projects presentations.
+
+* Grading
+
+Homework (30%), midterm exam on March 17(20%), reading/presenting assignments (20%)and a research project report due April 28 by 5:30pm(30%).
+
+* Late Policy and Academic Honesty
+
+An automatic extension of homework submission is acceptable with 20% penalty per day.
+Discussing materials with fellow students is acceptable, but programs, experiments and the reports must be done individually.
