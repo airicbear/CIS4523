@@ -1,0 +1,359 @@
+#+TITLE: Notes
+
+* Introduction
+
+Nowadays, we are creating a huge amount of data every day from all kinds of devices, in different formats, from independent or connected applications.
+This flood of big data has outpaced our capability to process, analyze, store, and understand these datasets.
+This rapid expansion is accelerated by the dramatic increase in acceptance of social networking applications, which allow users to create content freely and increase the already huge size of the Web.
+
+Furthermore, with mobile phones becoming the sensory gateway to get real-time data on people from different aspects, the vast amount of data that mobile carriers can potentially process to improve our daily life has significantly outpaced our past call data record-based processing, which was designed only for billing purposes.
+We can foresee that Internet of Things applications will raise the scale of data to an unprecedented level.
+People and devices (from home coffee machines to cars, to buses, railway stations, and airports) are all loosely connected.
+Trillions of such connected components will generate a huge data ocean, and valuable information must be discovered from the data to help improve our quality of life and make our world a better place.
+For example, after we get up every morning, in order to optimize our commute time to work and complete the optimization before we arrive at the office, the system needs to process information from traffic, weather, construction, police activities, and our calendar schedules, and perform deep optimization under tight time constraints.
+
+To deal with this staggeringly large quantity of data, we need fast and efficient methods that operate in real time using a reasonable amount of resources.
+
+** Big Data
+
+It is not really useful to define /big data/ in terms of a specific dataset size, for example, on the order of petabytes.
+A more useful definition is that the dataset is too large to be managed without using nonstandard algorithms or technologies, particularly if it is to be used for extracting knowledge.
+
+While twenty years ago people were struggling with gigabytes, at the time of writing this book the corresponding memory unit in table 1.1 is between the terabyte and the petabyte.
+There is no question that in a further twenty years, we will be a few lines down from this point.
+
+Big data was characterized by Laney in [154] by the three Vs of big data management:
+
+- Volume: There is more data than ever before, and its size continues to increase, but not the percentage of data that our tools can process.
+
+- Variety: There are many different types of data, such as text, sensor data, audio, video, graph, and more, from which we wouuld like to extract information.
+
+- Velocity: Data is arriving continuously in streams, and we are interested in obtaining useful information from it in real time.
+
+Other Vs have been added since then:
+
+- Variability: The structure of the data, or the way users want to interpret the data, changes over time.
+
+- Value: Data is valuable only to the extent that it leads to better decisions, and eventually to a competitive advantage.
+
+- Validity and Veracity: Some of the data may not be completely reliable, and it is important to manage this uncertainty.
+
+Gartner [200] summarizes this in his definition of big data in 2012 as "high volume, velocity and variety information assets that demand cost-effective, innovative forms of information processing for enhanced insight and decision making."
+
+Applications of big data should allow people to have better services and better customer experiences, and also be healthier:
+
+- Business: Customer personalization and churn detection (customers moving from one company to a rival one).
+
+- Technology: Reducing processing time from hours to seconds.
+
+- Health: Mining people's medical records and genomics data, to monitor and improve their health.
+
+- Smart cities: Cities focused on sustainable economic development and high quality of life, with wise management of natural resourecs.
+
+As an example of the usefulness of big data mining, we refer to the work by Global Pulse [236], which uses big data to improve life in developing countries.
+Global Pulse is a United Nations initiative, functioning as an innovation lab, whose strategy is to mine big data for:
+
+1. Researching innovative methods and techniques for analyzing real-time digital data to detect early emerging vulnerabilities.
+
+2. Assembling a free and open-source technology toolkit for analyzing real-time data and sharing hypotheses.
+
+3. Establishing an integrated, global network of Pulse Labs, to pilot the approach at the country level.
+
+The big data mining revolution is not restricted to the industrialized world, as mobile devices are spreading in developing countries as well.
+It is estimated that there are oevr five billion mobile phones, and that 80% are located in developing countries.
+
+*** Tools: Open-Source Revolution
+
+The big data phenomenon is intrinsically related to the open-source software revolution.
+Large companies such as Yahoo!, Twitter, LinkedIn, Google, and Facebook both benefitted from and contributed to open-source projects.
+Some examples are:
+
+- Apache Hadoop [16], a platform for data-intensive distributed applications, based on the MapReduce programming model and the Hadoop Distributed File system (HDFS).
+  Hadoop allows us to write applications that quickly process large amounts of data in parallel on clusters of computing nodes.
+
+- Projects related to Apache Hadoop [260]: Apache Pig, Apache Hive, Apache HBase, Apache ZooKeeper, Apache Cassandra, Cascading, Scribe, and Apache Mahout [17], which is a scalable machine learning and data mining open-source software based mainly on Hadoop.
+
+- Apache Spark [253], a data processing engine for large-scale data, running on the Hadoop infrastructure.
+  Spark powers a stack of libraries including SQL and DataFrames, MLlib for machine learning, GraphX, and Spark Streaming.
+  These libraries can be combined easily in the same application.
+
+- Apache Flink [62], a streaming dataflow engine that provides data distribution, communication, and fault tolerance for distributed computations over data streams.
+  Flink includes several APIs for creating applications that use the Flink engine.
+  If Apache Spark is a batch data processing engine that can emulate streaming data processing with Spark Streaming using micro-batches of data, Apache Flink is a streaming data processing engine that can perform batch data processing.
+
+- Apache Storm [168], software for streaming data-intensive distributed applications, similar to Apache S4 and Apache Samza.
+
+- TensorFlow [1], an open-source package for machine learning and deep neural networks.
+
+*** Challenges in Big Data
+
+There are many challenges for the future in big data management and analytics, arising from the very nature of data: large, diverse, and evolving [128].
+Some of the challenges that researchers and practitioners will have to deal with in the years to come are:
+
+- Analytics architecture.
+  It is not clear yet how an optimal architecture of an analytics system should be built to deal with historical data and with real-time data at the same time.
+  A first proposal was the Lambda architecture of Nathan Marz [169].
+  The Lambda architecture solves the problem into three layers: the batch latyer, the serving layer, and the spped layer.
+  It combines in the same system Hadoop for the batch layer and Storm for the speed layer.
+  A more recent proposal is the Kappa architecture, proposed by Kreps from LinkedIn [152].
+  It simplifies the Lambda architecture, removing the batch processing system.
+
+- Evaluation.
+  It is important to achieve significant statistical results, and not be fooled by randomness.
+  If the "multiple hypothesis problem" is not properly cared for, it is easy to go wrong with huge datasets and thousands of questions to answer at once, as Efron explains [95].
+  Also, it will be important to avoid the trap of focusing only on technical measures such as error or speed instead of on eventual real-world impact, as discussed by Wagstaff [242]: arguing against those who believe that big data is all hype is only possible by regularly publishing applications that meet reasonable criteria for a challenge-problem in the sense explained in that paper.
+
+- Distributed mining.
+  Many data mining techniques are not trivial to parallelize.
+  To have distributed version of some methods, substantial research is needed with both practical experiments and theoretical analysis.
+
+- Time-evolving data.
+  Data may be evolving over time, so it is important that the big data  mining techniques are able to adapt to, and in some cases explicitly  detect, change.
+  Many data stream mining techniques in this book are motivated by exactly this requirement [110].
+
+- Compression.
+  When dealing with big data, the quantity of space needed to store it is very relevant.
+  There are two main approaches: compression, where we lose no information; and sampling, where we choose data that we deem representative.
+  Using compression, we will use more time and less space, so we can consider it as a transformation from time to space.
+  Using sampling, we are losing information, but the gains in space may be in orders of magnitude.
+  For example Feldman et al. [99] use coresets to reduce the complexity of big data problems; a coreset is a small subset of the data that provably approximates the original data for a given problem.
+
+- Visualization.
+  A main issue in big data analysis is how to visualize the results.
+  Presenting information from large amounts of data in a way that is understandable to humans is quite a challenge.
+  It requires new techniques and frameworks to tell stories, such as those covered in the beautiful book /The Human Face of Big Data/ [228].
+
+- Hidden big data.
+  Large quantities of useful data are in fact useless because they are untagged, file-based, and unstructured.
+  The 2012 IDC study on big data [117] explained that, in 2021, 23% (643 exabytes) of the digital universe would be useful for big data if tagged and analyzed.
+  However, at that time only 3% of the potentially useful data was tagged, and even less was analyzed.
+  The figures have probably gotten worse in recent years.
+  The Open Data and Semantic Web movements have emerged, in part, to make us aware and improve on this situation.
+
+** Real-Time Analytics
+
+One particular case of the big data scenario is real-time analytics.
+It is important for organizations not only to obtain answers to queries immediately, but to do so according to the data that has just arrived.
+
+*** Data Streams
+
+/Data streams/ are an algorithmic abstraction to support real-time analytics.
+They are sequences of items, possibly infinite, each item having a timestamp, and so a temporal order.
+Data items arrive one by one, and we would like to build and maintain models, such as patterns or predictors, of these items in real time.
+There are two main algorithmic challenges when dealing with streaming data: the stream is large and fast, and we need to extract information in real time from it.
+That means that we usually need to accept approximate solutions in order to use less time and memory.
+Also, the data may be evolving, so our models have to adapt when there are changes in the data.
+
+*** Time and Memory
+
+Accuracy, time, and memory are the three main resource dimensions of the stream mining process: we are interested in methods that obtain the maximum accuracy with minimum time and low total memory.
+It is possible, as we will show later, to reduce evaluation to a two-dimensional task, by combining memory and time in a single cost measure.
+Note also that, since data arrives at high speed, it cannot be buffered, so time to process one item is as relevant as the total time, which is the one usually considered in conventional data mining.
+
+*** Applications
+
+There are many scenarios of streaming data.
+Here we offer a few example areas:
+
+- Sensor data and the Internet of Things: Every day, more sensors are used in industry to monitor processes, and to improve their quality.
+  Cities are starting to implement huge networks of sensors to monitor the mobility of people and to check the health of bridges and roads, traffic in cities, people's vital constants, and so on.
+
+- Telecommunication data: Telecommunication companies have large quantities of phone call data.
+  Nowadays, mobile calls and mobile phone locations are huge sources of data to be processed, often in real-time.
+
+- Social media: The users of social websites such as Facebook, Twitter, LinkedIn, and Instagram continuously produce data about their interactions and contributions.
+  Topic and community discovery and sentiment analysis are but two of the real-time analysis problems that arise.
+
+- Marketing and e-commerce: Sales businesses are collecting in real time large quantities of transactions that can be analyzed for value.
+  Detecting fraud in electronic transactions is essential.
+
+- Health care: Hospitals collect large amounts of time-sensitive data when  caring for patients, for example, monitoring patient vital signs such as blood pressure, heart rate, and temperature.
+  Telemedicine will also monitor patients when they are home, perhaps including data about their daily activity with separate sensors.
+  Also, the system could have results of lab tests, pathology reports, X-rays, and digital imaging.
+  Some of this data could be used in real time to provide warnings of changes in patient conditions.
+
+- Epidemics and disasters: Data from streams originating in the Internet can be used to detect epidemics and natural disasters, and can be combined with official statistics from official centers for disease and disaster control and prevention [63].
+
+- Computer security: Computer systems have to be protected from theft and damage to their hardware, software and information, as well as from disruption or misdirection of the services they provide, in particular, insider threat detection [11,229] and intrusion detection [194,195].
+
+- Electricity demand prediction: Providers need to know some time in advance how much power their customers will be requesting.
+  The figures change with time of day, time of year, geography, weather, state of the economy, customer habits, and many other factors, making it a complex prediction problem on massive, distributed data.
+
+** What This Book Is About
+
+Among the many aspects of big data, this book focuses on mining and learning from data streams, and therefore on the techniques for performing data analytics on data that arrives in sequence at high speed.
+Of the Vs that define big data, the one we address most is therefore Velocity.
+
+* Big Data Stream Mining
+
+** Algorithms
+
+The main algorithms in data stream mining are classification, regression, clustering, and frequent pattern mining.
+
+Suppose we have a stream of items, also called instances or examples, that are continuously arriving.
+We are in a classification setting when we need to assign a label from a set of nominal labels to each item, as a function of the other featuers of the item.
+A classifier can be trained as long as the correct label for (many of) the examples is available at a later time.
+An example of classification is to label incoming email messages as spam or not spam.
+Regression is a prediction task similar to classification, with the difference that the label to predict is a numerical value instead of a nominal one.
+An example of regression is predicting the value of a stock in the stock market tomorrow.
+
+Classification and regression need a set of properly labeled examples to learn a model, so that the can use this model to predict the labels of unseen examples.
+They are the main examples of /supervised/ learning tasks.
+When examples are not labeled, one interesting task is to group them in homogeneous clusters.
+Clustering is used, for example, to obtain user profiles in a website.
+It is an example of an /unsupervised/ learning task.
+
+Frequent pattern mining looks for the most relevant patterns within the example.
+For instance, in a sales supermarket dataset, it is possible to know what items are bought together and obtain association rules, as for example: /Most times customers buy cheese, they also buy wine./
+
+The most significant requirements for a streaming mining algorithm are the same for predictors, clusterers, and frequent pattern miners:
+
+Requirement 1: Process an instance at a time, and inspect it (at most) once.
+
+Requirement 2: Use a limited amount of time to process each instance.
+
+Requirement 3: Use a limited amount of memory.
+
+Requirement 4: Be ready to give an answer (prediction, clustering, patterns) at any time.
+
+Requirement 5: Adapt to temporal changes.
+
+** Classification
+
+Generally speaking, a stream mining classifier is ready to do either one of the following at any moment:
+
+1. Receive an unlabeled example and make a prediction for it on the basis of its current model.
+
+2. Receive the label for an example seen in the past, and use it for adjusting the model, that is, for training.
+
+*** Classifier Evaluation in Data Streams
+
+Given this cycle, it is reasonable to ask: How do we evaluate the performance of a classification algorithm?
+In traditional batch learning, evaluation is typically performed by randomly splitting the data into training and testing sets (holdout); if data is limited, cross-validation (creating several models and averaging results across several random partitions in training and test data) is preferred.
+
+In the stream setting, (effectively) unlimited data tends to make cross-validation too expensive computationally, and less necessary anyway.
+But it poses new challenges.
+The main one is to build an accurate picture of accuracy over time.
+One solution involves taking snapshots at different times during the induction of a model to see how the model accuracy varies.
+Two main approaches arise:
+
+- *Holdout:*
+  This is measuring performance on a single holdout partitition.
+  It is most useful when the division between train and test sets has been predefined, so that results from different studies can be directly compared.
+  However, holdout only gives an accurate estimation of the current accuracy of a classifier if the holdout set is similar to the current data, which may be hard to guarantee in practice.
+
+- *Interleaved test-then-train or prequential:*
+  Each individual example is used to test the model before it is used for training, and from this the accuracy can be incrementally updated.
+  When the evaluation is intentionally performed in this order, the model is always being tested on instances it has not seen.
+  This scheme has the advantage that no holdout set is needed for testing, making maximum use of the available data.
+  It also ensures a smooth plot of accuracy over time, as each individual example will become less and less significant to the overall average.
+  In test-then-train evaluation, all examples seen so far are taken into account to compute accuracy, while in prequential, only those in a sliding window of the most recent ones are.
+
+** Regression
+
+As in classification, the goal in a regression task is to learn a model that predicts the value of a label attribute for instances where the label is not (yet) known.
+However, here the label is a real value, and not one of a discrete set of values.
+Predicting the label exactly is irrealistic, so the goal is to be close to the correct values under some measure, such as average squared distance.
+
+** Clustering
+
+Clustering is useful when we have unlabeled instances and we want to find homogeneous groups or clusters in them, according to their similarities or affinities.
+The main difference from classification is that the groups are unknown before the learning process, and we do not know whether they are the "correct" ones after it.
+This is why it is a case of so-called /unsupervised/ learning.
+Uses of clustering include segmentation of customers in marketing and finding communities in social networks.
+
+Streaming methods for clustering typically have two levels, an online one and an offline one.
+At the online level, a set of microclusters is computed and updated from the stream efficiently; in the offline phase, a classical batch clustering method such as /k/-means is performed on the microclusters.
+The online level only performs one pass over the data; the offline phase performs several passes, but not over all the data, only over the set of microclusters, which is usually a pretty small set of controllable size.
+The offline level can be invoked once, when (if) the stream ends, or periodically as the stream flows to update the set of clusters.
+
+** Frequent Pattern Mining
+
+The problem is as follows: given a source of data (a batch dataset or a stream) that contains patterns, a threshold σ, find all the patterns that appear as a subpattern in a fraction σ of the patterns in the dataset.
+For example, if our source of data is a stream of supermarket purchases, and σ = 10%, we would call {cheese,wine} frequent if at least 10% of the purchases contain at least cheese /and/ wine, and perhaps other products.
+For graphs, a triangle could be a graph pattern, and if we have a database of graphs, this pattern would be frequent if at least a fraction σ of the graphs contain at least one triangle.
+
+* Streams and Sketches
+
+Streams can be seen as read-once sequences of data.
+Algorithms on streams must work under what we call the /data stream axioms/, already stated in chapter 2:
+
+1. Only one pass is allowed on the stream, each stream item can be observed only once.
+
+2. The processing time per item must be low.
+
+3. Memory use must be low as well, certainly sublinear in the length of the stream; this implies that only a few stream items can be explicitly stored.
+
+4. The algorithm must be able to provide answers at any time.
+
+5. Streams evolve over time, that is, they are nonstationary data sources.
+
+Many solutions to streaming problems use the notion of a stream /sketch/ or /summary/.
+A sketch is a data structure plus accompanying algorithms that read a stream and store sufficient information to be able to answer one or more predefined queries about the stream.
+We will view sketches as building blocks for higher-level learning and mining algorithms on streams.
+In this light, the requirement to use little memory is particularly pressing, because the mining algorithm will often create not a single sketch, but many, for keeping track of many different statistics on the data simultaneously.
+
+** Setting: Approximation Algorithms
+
+We first fix some notation used throughout the rest of the book.
+We use E[X] and Var(X) to denote the expected value and the variance, respectively, of random variable X.
+
+We define a /sketching/ algorithm by giving three operations: an /Init(...)/ operation that initializes the data structure, possibly with some parameteres such as the desired approximation or the amount of memory to be used; an /Update(item)/ operation that will be applied to every item on the stream; and a /Query(...)/ operation that returns the current value of a function of interest on the stream read so far (and may or may not have parameters).
+
+* Dealing with Change
+
+** Notion of Change in Streams
+
+Let us first discuss the notion of change in streams with respect to notions in other paradigms, as well as some nuances that appear when carefully defining change over time.
+
+First, nonstationary distributions of data may also appear in batch data analysis.
+In streaming, we cannot explicitly store all past data to detect or quantify change, and certainly we cannot use data from the future to make decisions in the present.
+
+Second, there is some similarity to the vast field of time series analysis, where data also consists of a sequence (or a set of sequences) of timestamped item.
+In time series analysis, however, the analysis process is often assumed to be offline, with batch data, and without the requirements for low memory and low processing time per item inherent to streams.
+
+Third, the notion of change used in data streaming is different from (or a particular case of) the more general notion of a "dataset shift" described in [182].
+Dataset shift occurs whenever training and testing datasets come from different distributions.
+
+Change managment strategies can be roughly grouped into three families, or a combination thereof.
+They can use adaptive estimators for relevant statistics, and then an algorithm that maintains a model in synchrony with these statistics.
+Or they can create models that are adapted or rebuilt when a change has occurred.
+Or they can be ensemble methods, which keep dynamic populations of models.
+We describe all three approaches in detail next.
+
+The first strategy relies on the fact that many model builders work by monitoring a set of statistics from the stream and then combining them into a model.
+These statistics may be counts, absolute or conditional probabilities, correlations between attributes, or frequencies of certain patterns, among others.
+Examples of such algorithms are Naive Bayes, which keeps counts of co-occurences of attribute values and class values, and the perceptron algorithm, which updates weights taking into account agreement between attributes and the outcome to be predicted.
+This strategy works by having a dynamic estimator for each relevant statistic in a way that reflects its current value, and letting the model builder feed on those estimators.
+The architecture is presented in Figure 5.1.
+
+*** Estimators
+
+An /estimator algorithm/ estimates one or several statistics on the input data, which may change over time.
+We concentrate on the case in which such a statistic is (or may be rewritten as) an expected value of the current distribution of the data, which therefore could be approximated by the average of a sample of such a distribution.
+Part of the problem is that, with the possibility of drift, it is difficult to be sure which past elements of the stream are still reliable as samples of the current distribution, and which are outdated.
+
+** Change detection
+
+- Mean time between false alarmas, MTFA:
+  Measures how often we get false alarms when there is no change.
+  The false alarm rate (FAR) is defined as 1/MTFA.
+
+- Mean time to detection, MTD(θ):
+  Measures the capacity of the learning system to detect and react to change when it occurs.
+
+- Missed detection rate, MDR(θ):
+  Measures the probability of not generating an alarm when there has been change.
+
+- Average run length, ARL(θ):
+  This measure, which generalizes MTFA and MTD, indicates how long we have to wait before detecting a change after it occurs.
+  We have MTFA = ARL(0) and, for θ > 0, MTD(θ) = ARL(θ).
+
+*** The CUSUM and Page-Hinkley Tests
+
+The cumulative sum (CUSUM) test [191] is designed to give an alarm when the mean of the input data significantly deviates from its previous value.
+
+In its simplest form, the CUSUM test is as follows: given a sequence of observations \({x_t}_t\), define \(z_t = (x_t - \mu) / \sigma\), where \(\mu\) is the expected value of the \(x_t\) and \(\sigma\) is their standard deviation in "normal" conditions; if \(\mu\) and \(\sigma\) are not known a priori, they are estimated from the sequence itself.
+
+CUSUM is memorylses and uses constant processing time per item.
+How its behavior depends on the parameters \(k\) and \(h\) is difficult to analyze exactly [27].

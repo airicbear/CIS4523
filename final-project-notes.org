@@ -1,0 +1,30 @@
+#+TITLE: Notes
+
+* Methodology
+
+- Income is adjusted for inflation
+
+- Dimensionality: retain columns that would affect prediction
+
+- "Occupational prestige" determined through separate studies by sociologists.
+  Generally, higher prestige corresponds to professional occupations (e.g., doctors, lawyers, engineers, etc.) while lower prestige corresponds to service occupations (e.g., restaurant workers, construction workers, etc.)
+
+* Results
+
+- For training/testing, I found 90/10 performed had slightly higher accuracy (1%) than 75/25
+
+* Conclusion
+
+- Number of children: positive correlation
+
+- Shortcoming:
+
+  - Should've used 70/30 for better generalization
+
+* Comments from professor
+
+- Compare to some baseline
+
+  + Number of features affect prediction
+
+- Address inflation
